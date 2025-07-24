@@ -5,9 +5,18 @@ import { useDisableActions } from '@/components/layout/Header'
 import { supabase } from '@/lib/supabaseClient'
 import Layout from '@/components/layout/Layout'
 
+type Action = {
+  id: string
+  name: string
+  description?: string
+  slug: string
+  action_type: string
+  // voeg hier velden toe die je nog gebruikt
+}
+
 export default function ActionsPage() {
-  const [actions, setActions] = useState<any[]>([])
-  const [selected, setSelected] = useState<any | null>(null)
+  const [actions, setActions] = useState<Action[]>([])
+  const [selected, setSelected] = useState<Action | null>(null)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
   const [loading, setLoading] = useState(false)

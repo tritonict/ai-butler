@@ -7,6 +7,7 @@ import { useAuth } from '@/components/AuthProvider'
 import { handleLogout } from '@/lib/auth'
 import { IfRole } from '@/components/IfRole'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link';
 
 export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: () => void }) {
   const t = useTranslations('sidebar')
@@ -20,9 +21,9 @@ export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: (
       className="bg-white dark:bg-neutral-800 h-full overflow-hidden shadow-lg"
     >
       <div className="flex flex-col p-4 gap-4 w-64">
-        <a href="/" className="flex items-center gap-2 text-neutral-800 dark:text-white">
+        <Link href="/" className="flex items-center gap-2 text-neutral-800 dark:text-white">
           <Home size={18} /> Dashboard
-        </a>
+        </Link>
         <a href="/actions" className="flex items-center gap-2 text-neutral-800 dark:text-white">
           <Settings size={18} /> AI Agent Actions
         </a>

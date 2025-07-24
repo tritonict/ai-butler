@@ -7,9 +7,16 @@ import Layout from '@/components/layout/Layout'
 import { supabase } from '@/lib/supabaseClient'
 import { IfRole } from '@/components/IfRole'
 
+type Profile = {
+  id: string
+  full_name: string
+  role: string
+}
+
+
 export default function AdminPage() {
   const { user } = useAuth()
-  const [profiles, setProfiles] = useState<any[]>([])
+  const [profiles, setProfiles] = useState<Profile[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

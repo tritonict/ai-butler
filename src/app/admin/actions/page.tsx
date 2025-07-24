@@ -4,6 +4,15 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import Layout from '@/components/layout/Layout'
 
+type Action = {
+  id: string
+  name: string
+  description?: string
+  slug: string
+  action_type: string
+}
+
+
 export default function AdminActionsPage() {
   const [actions, setActions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,13 +68,13 @@ export default function AdminActionsPage() {
     };
     
     
-    let result;
+    
     if (editMode) {
       console.log('Editing action');
-      result = await supabase.from('actions').update({ ...payload, id: formData.id }).eq('id', formData.id);
+      await supabase.from('actions').update({ ...payload, id: formData.id }).eq('id', formData.id);
     } else {
       console.log('Creating new action');
-      result = await supabase.from('actions').insert([payload]);
+      await supabase.from('actions').insert([payload]);
     }
     
     setFormData({
@@ -77,7 +86,7 @@ export default function AdminActionsPage() {
     fetchActions();
   };
 
-  const handleEdit = (action: any) => {
+  const handleEdit = (action: Action) => {
    
     if (action)
     {
