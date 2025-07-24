@@ -67,11 +67,16 @@ export default function SettingsPage() {
 };
 
   const handleUnlink = async () => {
+  	if (!user) return; // of toon een foutmelding
     await supabase.from('google_tokens').delete().eq('id', user.id)
     setCalendarLinked(false)
   }
+  
+  
+  
 
   const handleSave = async () => {
+  if (!user) return; // of toon een foutmelding
     const { error } = await supabase
       .from('profiles')
       .update({ full_name: fullName })
