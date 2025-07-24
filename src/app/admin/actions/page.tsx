@@ -9,11 +9,11 @@ type Action = {
   name: string
   description?: string
   slug: string
-  action_type: string
+  action_type?: string
   prompt_template: string
-  parameters: Record<string, string>
+  parameters?: Record<string, string>
   is_active: boolean
-  system_prompt: string
+  system_prompt?: string
   // voeg hier velden toe die je nog gebruikt
 }
 
