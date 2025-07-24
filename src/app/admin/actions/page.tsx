@@ -13,12 +13,13 @@ type Action = {
   prompt_template: string
   parameters: Record<string, string>
   is_active: boolean
+  system_prompt: string
   // voeg hier velden toe die je nog gebruikt
 }
 
 
 export default function AdminActionsPage() {
-  const [actions, setActions] = useState([]);
+  const [actions, setActions] = useState<Action[]>([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     id: '',

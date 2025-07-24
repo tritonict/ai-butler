@@ -15,6 +15,7 @@ type Action = {
   prompt_template: string
   parameters: Record<string, string>
   is_active: boolean
+  system_prompt: string
   // voeg hier velden toe die je nog gebruikt
 }
 
