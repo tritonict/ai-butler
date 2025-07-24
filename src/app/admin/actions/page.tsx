@@ -154,7 +154,21 @@ export default function AdminActionsPage() {
           <input className="w-full p-2 border rounded" placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
           <textarea className="w-full p-2 border rounded" placeholder="Prompt Template" value={formData.prompt_template || ''} onChange={(e) => setFormData({ ...formData, prompt_template: e.target.value })} />
           <textarea className="w-full p-2 border rounded" placeholder="System Prompt" value={formData.system_prompt || ''} onChange={(e) => setFormData({ ...formData, system_prompt: e.target.value })} />
-          <input className="w-full p-2 border rounded" placeholder="Parameters (JSON)" value={formData.parameters} onChange={(e) => setFormData({ ...formData, parameters: e.target.value })} />
+          <input 
+          		className="w-full p-2 border rounded" 
+          		placeholder="Parameters (JSON)" 
+          		value={formData.parameters ? JSON.stringify(formData.parameters) : ''} 
+          		
+          		onChange={(e) => {
+    						try {
+      							const parsed = JSON.parse(e.target.value)
+      							setFormData({ ...formData, parameters: parsed })
+    								} catch {
+      				// eventueel foutafhandeling tonen
+    							}
+ 							 }}
+          		
+          />
           <select className="w-full p-2 border rounded" value={formData.action_type} onChange={(e) => setFormData({ ...formData, action_type: e.target.value })}>
             <option value="free_prompt">Free Prompt</option>
             <option value="defined_prompt">Defined Prompt</option>
