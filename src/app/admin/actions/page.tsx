@@ -7,12 +7,12 @@ import Layout from '@/components/layout/Layout'
 type Action = {
   id: string
   name: string
-  description?: string
   slug: string
-  action_type?: string
+  description?: string
   prompt_template: string
   parameters?: Record<string, string>
   is_active: boolean
+  action_type?: string
   system_prompt?: string
   // voeg hier velden toe die je nog gebruikt
 }
@@ -21,16 +21,16 @@ type Action = {
 export default function AdminActionsPage() {
   const [actions, setActions] = useState<Action[]>([]);
   const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Action>({
     id: '',
-    slug: '',
     name: '',
-    prompt_template: '',
-    is_active: true,
-    system_prompt: '',
-    parameters: {},
+    slug: '',
     description: '',
-    action_type: true
+    prompt_template: '',
+    parameters: {},
+    is_active: true,
+    action_type: '',
+    system_prompt: ''
   });
   const [editMode, setEditMode] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -83,8 +83,15 @@ export default function AdminActionsPage() {
     }
     
     setFormData({
-      id: '', slug: '', name: '', description: '', prompt_template: '', parameters: '{}', is_active: true,
-      action_type: 'free_prompt', system_prompt: '',
+      id: '', 
+      slug: '', 
+      name: '', 
+      description: '', 
+      prompt_template: '', 
+      parameters: '{}', 
+      is_active: true,
+      action_type: 'free_prompt', 
+      system_prompt: '',
     });
     setEditMode(false);
     setShowForm(false);
