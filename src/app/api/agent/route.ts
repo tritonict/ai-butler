@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     return NextResponse.json(result)
   } catch (error: unknown) {
   	if (error instanceof Error) {
-  		return NextResponse.json({ error: 'Agent API error', details: e.message }, { status: 500 })
+  		return NextResponse.json({ error: 'Agent API error', details: error.message }, { status: 500 })
   	}
   	else
   	{
