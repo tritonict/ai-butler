@@ -1,6 +1,11 @@
 {
 	"sidebar": {
-		"settings": "Instellingen"
+		"dashboard": "Dashboard",
+		"settings": "Instellingen",
+		"aiagentactions": "AI Agent Acties",
+		"rolemanagement": "Rollen Beheer",
+		"actionsmanagement": "Actie Beheer",
+		"logout": "Uitloggen"
 	},
 	"general": {
   	"greeting": "Hallo",

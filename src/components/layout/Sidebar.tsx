@@ -2,7 +2,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Home, Settings, LogOut } from 'lucide-react'
+import { Home, Settings, LogOut, Users, Activity } from 'lucide-react'
 import { useAuth } from '@/components/AuthProvider'
 import { handleLogout } from '@/lib/auth'
 import { IfRole } from '@/components/IfRole'
@@ -22,29 +22,29 @@ export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: (
     >
       <div className="flex flex-col p-4 gap-4 w-64">
         <Link href="/" className="flex items-center gap-2 text-neutral-800 dark:text-white">
-          <Home size={18} /> Dashboard
+          <Home size={18} /> {t('dashboard')}
         </Link>
         <a href="/actions" className="flex items-center gap-2 text-neutral-800 dark:text-white">
-          <Settings size={18} /> AI Agent Actions
+          <Activity size={18} /> {t('aiagentactions')}
         </a>
         <a href="/settings" className="flex items-center gap-2 text-neutral-800 dark:text-white">
           <Settings size={18} /> {t('settings')}
         </a>
         <IfRole role="admin">
           <a href="/admin" className="flex items-center gap-2 text-neutral-800 dark:text-white">
-            <Settings size={18} /> Rollen Beheer
+            <Users size={18} /> {t('rolemanagement')}
           </a>
         </IfRole>
         <IfRole role="admin">
           <a href="/admin/actions" className="flex items-center gap-2 text-neutral-800 dark:text-white">
-            <Settings size={18} /> Actions Management
+            <Activity size={18} /> {t('actionsmanagement')}
           </a>
         </IfRole>
         <button
           onClick={handleLogout}
           className="flex items-center gap-2 text-red-600"
         >
-          <LogOut size={18} /> Uitloggen
+          <LogOut size={18} /> {t('logout')}
         </button>
       </div>
     </motion.div>

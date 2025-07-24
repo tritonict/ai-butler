@@ -1,6 +1,11 @@
 {
 	"sidebar": {
-		"settings": "Settings"
+		"dashboard": "Dashboard",
+		"settings": "Settings",
+		"aiagentactions": "AI Agent Actions",
+		"rolemanagement": "Role Management",
+		"actionsmanagement": "Actions Management",
+		"logout": "Logout"
 	},
 	"general": {
   	"greeting": "Hello",
