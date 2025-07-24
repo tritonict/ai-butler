@@ -27,6 +27,10 @@ export default function AdminActionsPage() {
     name: '',
     prompt_template: '',
     is_active: true,
+    system_prompt: '',
+    parameters: {},
+    definition: '',
+    action_type: true
   });
   const [editMode, setEditMode] = useState(false);
   const [showForm, setShowForm] = useState(false);
