@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   	}
   	else
   	{
-  		return NextResponse.json({ error: 'Agent API error', details: unknown }, { status: 500 })
+  		return NextResponse.json({ error: 'Unknown Agent API error' }, { status: 500 })
   	}
   }
 }
