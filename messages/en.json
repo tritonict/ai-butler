@@ -1,0 +1,15 @@
+{
+	"sidebar": {
+		"settings": "Settings"
+	},
+	"general": {
+  	"greeting": "Hello",
+  	"welcome": "Welcome to our site",
+  	"logout": "Logout",
+  	"save": "Save",
+  	"cancel": "Cancel"
+  },
+  "homepage": {
+		"welcome": "welcome"
+	}
+}

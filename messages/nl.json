@@ -1,0 +1,15 @@
+{
+	"sidebar": {
+		"settings": "Instellingen"
+	},
+	"general": {
+  	"greeting": "Hallo",
+  	"welcome": "Welkom op onze site",
+  	"logout": "Uitloggen",
+  	"save": "Opslaan",
+  	"cancel": "Annuleren"
+  },
+  "homepage": {
+		"welcome": "Welkom"
+	}
+}
