@@ -88,7 +88,7 @@ export default function AdminActionsPage() {
       name: '', 
       description: '', 
       prompt_template: '', 
-      parameters: '{}', 
+      parameters: {}, 
       is_active: true,
       action_type: 'free_prompt', 
       system_prompt: '',
