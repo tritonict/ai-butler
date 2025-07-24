@@ -29,7 +29,7 @@ export default function AdminActionsPage() {
     is_active: true,
     system_prompt: '',
     parameters: {},
-    definition: '',
+    description: '',
     action_type: true
   });
   const [editMode, setEditMode] = useState(false);
