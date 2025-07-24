@@ -116,12 +116,32 @@ export default function AdminActionsPage() {
     
     setShowForm(true);
   };
+  
+  const handleAdd = () => {
+   
+    	setFormData({
+      	id: '', slug: '', 
+      	name: '', 
+      	description: '', 
+      	prompt_template: '', 
+      	parameters: {}, 
+      	is_active: true,
+      	action_type: 'free_prompt', 
+      	system_prompt: '',
+    		});
+    	setEditMode(false);
+    
+    
+    setShowForm(true);
+  };
+  
+  
 
   return (
     <Layout>
     <div className="p-4">
       <button
-        onClick={() => handleEdit(null)}
+        onClick={() => handleAdd()}
         className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
       >
         Add Action
