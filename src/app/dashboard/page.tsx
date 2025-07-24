@@ -146,8 +146,9 @@ export default function DashboardPage() {
               }}
               className="mt-4 mb-2 flex gap-2"
             >
-              <Input
+              <input
                 ref={inputRef}
+                className="w-full p-2 border rounded bg-white text-black dark:bg-zinc-800 dark:text-white"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 
