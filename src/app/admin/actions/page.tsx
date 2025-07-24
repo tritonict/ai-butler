@@ -108,7 +108,7 @@ export default function AdminActionsPage() {
     else
     {
     	setFormData({
-      id: '', slug: '', name: '', description: '', prompt_template: '', parameters: '{}', is_active: true,
+      id: '', slug: '', name: '', description: '', prompt_template: '', parameters: {}, is_active: true,
       action_type: 'free_prompt', system_prompt: '',
     });
     	setEditMode(false);
