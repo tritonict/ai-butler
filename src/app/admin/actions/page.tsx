@@ -25,12 +25,8 @@ export default function AdminActionsPage() {
     id: '',
     slug: '',
     name: '',
-    description: '',
     prompt_template: '',
-    parameters: '{}',
     is_active: true,
-    action_type: 'free_prompt',
-    system_prompt: '',
   });
   const [editMode, setEditMode] = useState(false);
   const [showForm, setShowForm] = useState(false);
