@@ -9,7 +9,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function SettingsPage() {
  
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
 
   const [fullName, setFullName] = useState('')
   const [loading, setLoading] = useState(true)
