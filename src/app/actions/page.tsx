@@ -11,6 +11,9 @@ type Action = {
   description?: string
   slug: string
   action_type: string
+  prompt_template: string
+  parameters: Record<string, string>
+  is_active: boolean
   // voeg hier velden toe die je nog gebruikt
 }
 
