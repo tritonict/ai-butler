@@ -91,8 +91,8 @@ useEffect(() => {
   setSelected(action);
   setMessages([
     {
-      role: 'system'
-      // hier system prompt zetten. 
+      role: 'system',
+      content: ''
     },
   ]);
 };
