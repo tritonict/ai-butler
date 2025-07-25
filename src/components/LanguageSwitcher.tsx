@@ -22,7 +22,13 @@ export default function LanguageSwitcher() {
     const lang = e.target.value;
     Cookies.set('locale', lang, { expires: 365 });
     setSelectedLang(lang);
-    router.refresh(); // herlaadt de pagina met nieuwe context
+    
+    // Geef de cookie even tijd om te settelen
+  setTimeout(() => {
+    router.refresh(); // trigger server-side render met nieuwe cookie
+  }, 50);
+    
+    //router.refresh(); // herlaadt de pagina met nieuwe context
   };
 
   return (

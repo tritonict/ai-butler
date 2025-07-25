@@ -15,6 +15,7 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(true)
   const [calendarLinked, setCalendarLinked] = useState(false)
   const [message, setMessage] = useState('')
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     if (!user) return
@@ -88,6 +89,12 @@ export default function SettingsPage() {
       setMessage('Profiel bijgewerkt')
     }
   }
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <Layout>
