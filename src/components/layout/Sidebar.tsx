@@ -16,7 +16,24 @@ export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: (
   const t = useTranslations('sidebar')
   const { role } = useAuth()
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
   
+  const handleTouchStart = (e: React.TouchEvent) => {
+  touchStartX.current = e.changedTouches[0].screenX;
+};
+
+const handleTouchEnd = (e: React.TouchEvent) => {
+  touchEndX.current = e.changedTouches[0].screenX;
+
+  if (
+    touchStartX.current !== null &&
+    touchEndX.current !== null &&
+    touchStartX.current - touchEndX.current > 50 // swipe left
+  ) {
+    toggle(); // sluit sidebar
+  }
+};
   
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -37,7 +54,10 @@ export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: (
   }, [isOpen, toggle]);
 
   return (
-    <aside ref={sidebarRef} className={`bg-gray-100 dark:bg-gray-800 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition duration-200 ease-in-out z-50`}>
+    <aside ref={sidebarRef} 
+    onTouchStart={handleTouchStart}
+  onTouchEnd={handleTouchEnd}
+    className={`bg-gray-100 dark:bg-gray-800 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition duration-200 ease-in-out z-50`}>
       <div className="flex flex-col p-4 gap-4 w-64">
         <Link href="/" className="flex items-center gap-2 text-neutral-800 dark:text-white">
           <Home size={18} /> {t('dashboard')}
