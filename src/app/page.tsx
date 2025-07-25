@@ -14,9 +14,13 @@ export default function Page() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
+  const [mounted, setMounted] = useState(false);
+  
+  
+ 
 
   useEffect(() => {
-    if (user) router.push('/dashboard')
+    if (user) router.push('/home')
   }, [user, router])
 
   const handleLogin = async () => {
@@ -38,6 +42,14 @@ export default function Page() {
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({ provider: 'google' })
   }
+  
+   
+   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; 
+  
 
   if (user === undefined) return null
 
