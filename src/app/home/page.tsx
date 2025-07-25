@@ -7,6 +7,18 @@ import Layout from '@/components/layout/Layout'
 import { Button, Input } from '@/components/ui';
 import { Upload, Globe, Settings2, Send } from 'lucide-react';
 
+type Action = {
+  id: string
+  name: string
+  description?: string
+  slug: string
+  action_type?: string
+  prompt_template: string
+  parameters?: Record<string, string>
+  is_active: boolean
+  system_prompt?: string
+  // voeg hier velden toe die je nog gebruikt
+}
 
 export default function HomePage() {
   const [actions, setActions] = useState<Action[]>([])
