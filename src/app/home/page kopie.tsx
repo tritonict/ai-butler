@@ -20,11 +20,6 @@ type Action = {
   // voeg hier velden toe die je nog gebruikt
 }
 
-  type Props = {
-  actions: Action[]
-  onSelect: (action: Action) => void
-}
-
 export default function HomePage() {
   const [actions, setActions] = useState<Action[]>([])
   const [selected, setSelected] = useState<Action | null>(null)
@@ -35,23 +30,6 @@ export default function HomePage() {
   const chatEndRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [mounted, setMounted] = useState(false);
-  
-  
-  // dropdown voor buddies  
-  const [open, setOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-  
-  
  
   useEffect(() => {
   const fetch = async () => {
@@ -85,17 +63,7 @@ useEffect(() => {
   }, []);
 
   if (!mounted) return null;
-  
-  
-  const handleSelectAction = (action: Action) => {
-  setSelected(action);
-  setMessages([
-    {
-      role: 'system',
-      content: action.systemPrompt,
-    },
-  ]);
-};
+
 
   const handleSubmit = async () => {
     if (!input.trim() || !selected || disableActions || loading) return
@@ -186,45 +154,12 @@ useEffect(() => {
       	
       					<div className="flex justify-between items-center">
           				<div className="flex gap-2">
-      							
-      							
-      							
-      							
-            				
-            				
-            				
-            				<div className="relative" ref={dropdownRef}>
-      <button
-        type="button"
-        onClick={() => setOpen(prev => !prev)}
-        className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
-        aria-label="Select Action"
-      >
-      <Bot className="w-5 h-5" />
-      </button>
-
-      {open && (
-        <div className="absolute bottom-full mb-2 w-48 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded shadow-lg z-10">
-          <ul className="max-h-60 overflow-y-auto text-sm">
-            {actions.map(action => (
-              <li
-                key={action.id}
-                onClick={() => {
-                handleSelectAction(action)  
-                  setOpen(false)
-                }}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                {action.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-            				
-            				
-            				
+      							<button
+              				title="Taal"
+              				className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none"
+            				>
+              			<Bot className="w-5 h-5" />
+            				</button>
             				<button
               				title="Instellingen"
               				className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none"
