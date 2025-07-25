@@ -87,7 +87,7 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
           </button>
           <img src="/logo_black.png" alt="Logo" className="h-8 w-auto" />
         
-        <h1 className="text-xl font-bold text-neutral-800 dark:text-white">AI Butler</h1>
+        <h1 className="hidden md:block text-xl font-bold text-neutral-800 dark:text-white">AI Butler</h1>
       
         <span onClick={toggleView} className="cursor-pointer hover:underline">
           {tokenText} tokens
