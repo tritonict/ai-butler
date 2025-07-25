@@ -77,11 +77,15 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
 
   return (
   <>
-    <header className="flex items-center justify-between bg-neutral-900 text-white px-4 py-2 text-sm relative">
+    <header className="flex items-center justify-between bg-gray-100 dark:bg-neutral-900 text-zinc-900 dark:text-white px-4 py-2 text-sm relative">
+        
+      
+        
         
           <button onClick={toggleSidebar} className="block">
             <Menu className="w-6 h-6 text-neutral-800 dark:text-white" />
           </button>
+          <img src="/logo_black.png" alt="Logo" className="h-8 w-auto" />
         
         <h1 className="text-xl font-bold text-neutral-800 dark:text-white">AI Butler</h1>
       

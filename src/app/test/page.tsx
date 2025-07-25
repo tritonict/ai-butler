@@ -96,7 +96,7 @@ useEffect(() => {
     <Layout>
       <div className="pl-8 pr-4 flex flex-col h-[calc(100vh-4rem)]">
           <div className="flex flex-col h-screen">
-            <div className="flex-1 overflow-y-auto w-[80vw] mx-auto max-w-3xl space-y-2 pr-2">
+            <div className="flex-1 overflow-y-auto space-y-2 pr-2">
               {messages.map((msg, index) => (
                 <div
                   key={index}
@@ -107,8 +107,8 @@ useEffect(() => {
                   <div
                     className={`whitespace-pre-wrap max-w-[80%] p-3 rounded-lg ${
                       msg.role === 'user'
-                        ? 'bg-green-100 text-black text-right'
-                        : 'bg-white text-black text-left'
+                        ? 'bg-blue-700 text-white text-right'
+                        : 'bg-neutral-700 text-green-300 text-left'
                     }`}
                   >
                     <span className="block text-sm font-semibold">
@@ -120,7 +120,7 @@ useEffect(() => {
               ))}
               {loading && (
                 <div className="flex justify-start">
-                  <div className="bg-white text-black text-left p-3 rounded-lg max-w-[80%]">
+                  <div className="bg-neutral-700 text-green-300 text-left p-3 rounded-lg max-w-[80%]">
                     <span className="block text-sm font-semibold">AI:</span>
                     typing...
                   </div>

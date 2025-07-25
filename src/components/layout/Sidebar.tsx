@@ -1,25 +1,43 @@
 // components/layout/Sidebar.tsx
 'use client'
 
-import { motion } from 'framer-motion'
 import { Home, Settings, LogOut, Users, Activity } from 'lucide-react'
 import { useAuth } from '@/components/AuthProvider'
 import { handleLogout } from '@/lib/auth'
 import { IfRole } from '@/components/IfRole'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+
+
+
 
 export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: () => void }) {
   const t = useTranslations('sidebar')
   const { role } = useAuth()
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  
+  
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+        toggle();
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, toggle]);
 
   return (
-    <motion.div
-      initial={false}
-      animate={{ width: isOpen ? 256 : 0 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white dark:bg-neutral-800 h-full overflow-hidden shadow-lg"
-    >
+    <aside ref={sidebarRef} className={`bg-gray-100 dark:bg-gray-800 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition duration-200 ease-in-out z-50`}>
       <div className="flex flex-col p-4 gap-4 w-64">
         <Link href="/" className="flex items-center gap-2 text-neutral-800 dark:text-white">
           <Home size={18} /> {t('dashboard')}
@@ -47,6 +65,6 @@ export default function Sidebar({ isOpen, toggle }: { isOpen: boolean; toggle: (
           <LogOut size={18} /> {t('logout')}
         </button>
       </div>
-    </motion.div>
+    </aside>
   )
 }
