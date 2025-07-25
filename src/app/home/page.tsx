@@ -112,7 +112,7 @@ useEffect(() => {
                     }`}
                   >
                     <span className="block text-sm font-semibold">
-                      {msg.role === 'user' ? 'Jij' : 'AI'}:
+                      {msg.role === 'user' ? 'Jij' : selected?.name || 'AI'}:
                     </span>
                     {msg.content}
                   </div>
@@ -121,7 +121,7 @@ useEffect(() => {
               {loading && (
                 <div className="flex justify-start">
                   <div className="bg-white text-black text-left p-3 rounded-lg max-w-[80%]">
-                    <span className="block text-sm font-semibold">AI:</span>
+                    <span className="block text-sm font-semibold">{selected?.name || 'AI'}:</span>
                     typing...
                   </div>
                 </div>
@@ -141,7 +141,7 @@ useEffect(() => {
             
             
            {/* chatbox */}
-            <div className="sticky bottom-0 w-[80vw] max-w-3xl mx-auto bg-zinc-200 dark:bg-zinc-800 p-4 rounded-2xl shadow-sm">
+            <div className="sticky bottom-0 w-[80vw] max-w-3xl mx-auto bg-zinc-200 dark:bg-zinc-800 p-4 rounded-2xl shadow-sm mb-10">
             	<div className="flex flex-col gap-3">        
       					{/* Input veld */}
   							<input
