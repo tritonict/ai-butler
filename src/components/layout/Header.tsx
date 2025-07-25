@@ -92,7 +92,7 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
         <span onClick={toggleView} className="cursor-pointer hover:underline">
           {tokenText} tokens
         </span>
-        <span>Saldo: € {formattedSaldo}</span>
+        <span className="hidden md:block ">Saldo: € {formattedSaldo}</span>
        
       
     </header>
