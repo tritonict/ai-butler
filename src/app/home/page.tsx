@@ -92,7 +92,7 @@ useEffect(() => {
   setMessages([
     {
       role: 'system',
-      content: action.systemPrompt,
+      content: action.system_prompt,
     },
   ]);
 };
