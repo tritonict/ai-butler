@@ -33,7 +33,7 @@ export default function Page() {
   const handleSignup = async () => {
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) {
-      setMessage({ type: 'error', text: 'Aanmelden mislukt. Probeer een ander e-mailadres.' })
+      setMessage({ type: 'error', text: 'Registreren mislukt. Probeer een ander e-mailadres.' })
     } else if (!data.session) {
       setMessage({ type: 'success', text: 'Account aangemaakt. Bevestig je e-mailadres via de mail voordat je kunt inloggen.' })
     }
@@ -69,7 +69,7 @@ export default function Page() {
       />
     </div>
  
-      <h1 className="text-4xl font-bold mb-6">AI Butler</h1>
+      
       <input
         type="email"
         value={email}

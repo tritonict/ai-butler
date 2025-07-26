@@ -107,6 +107,8 @@ useEffect(() => {
     setMessages(updatedMessages)
     setInput('')
     setLoading(true)
+    
+    console.log(selected.system_prompt)
 
     const res = await fetch('/api/agent', {
       method: 'POST',
@@ -115,6 +117,7 @@ useEffect(() => {
         action_id: selected.id,
         user_id: user.id,
         parameters: selected.parameters,
+        system_prompt: selected.system_prompt,
         inputs: {}
       }),
     })

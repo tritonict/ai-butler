@@ -73,7 +73,7 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
 
   const formattedSaldo = saldo !== null ? saldo.toFixed(4) : '0.00'
   const toggleView = () => setTokenView(tokenView === 'daily' ? 'total' : 'daily')
-  const tokenText = tokenView === 'daily' ? `Vandaag: ${dailyTokens}` : `Totaal: ${totalTokens}`
+  const tokenText = tokenView === 'daily' ? `${dailyTokens}` : `${totalTokens}`
 
   return (
   <>

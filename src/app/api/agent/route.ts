@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Ongeldige JSON' }, { status: 400 })
   }
 
-  const { prompt, action_id, user_id, parameters } = body
+  const { prompt, action_id, user_id, parameters, system_prompt } = body
 
   if (!prompt || !action_id || !user_id) {
     console.error('❌ Missing fields:', { prompt, action_id, user_id })
@@ -20,12 +20,12 @@ export async function POST(req: Request) {
 
   try {
     console.log('🌍 N8N_AGENT_WEBHOOK_URL:', process.env.N8N_AGENT_WEBHOOK_URL)
-    console.log('📦 Payload:', JSON.stringify({ prompt, action_id, user_id, parameters }, null, 2))
+    console.log('📦 Payload:', JSON.stringify({ prompt, action_id, user_id, parameters, system_prompt }, null, 2))
 
     const response = await fetch(process.env.N8N_AGENT_WEBHOOK_URL!, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, action_id, user_id, parameters })
+      body: JSON.stringify({ prompt, action_id, user_id, parameters, system_prompt })
     })
 
     console.log('⬅️ response status:', response.status)
