@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl'
 
 type Session = {
   session_id: string
+  action_id: string
   prompt: string
   started_at: string
 }
