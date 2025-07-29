@@ -7,6 +7,8 @@ import Layout from '@/components/layout/Layout'
 import { Button, Input } from '@/components/ui';
 import { Upload, Globe, Settings2, Send, Bot } from 'lucide-react';
 import { useTranslations } from 'next-intl'
+import { v4 as uuidv4 } from 'uuid'
+import ChatHistorySidebar from '@/components/ChatHistorySidebar'
 
 type Action = {
   id: string
@@ -37,6 +39,9 @@ export default function HomePage() {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('homepage')
+  const [sessionId, setSessionId] = useState<string>()
+  const [showHistory, setShowHistory] = useState(false)
+ 
   
   
   // dropdown voor buddies  
@@ -67,6 +72,12 @@ export default function HomePage() {
 
     const defaultAction = data?.find(action => action.slug === 'vrije_prompt_algemeen')
     setSelected(defaultAction ?? null)
+    
+    
+  	const newSessionId = uuidv4()
+		setSessionId(newSessionId)
+		console.log('[INIT] Default Action Nieuwe sessie aangemaakt:', newSessionId)
+   
   }
   fetch()
 }, [])
@@ -91,6 +102,12 @@ useEffect(() => {
   
   const handleSelectAction = (action: Action) => {
   setSelected(action);
+  
+  	
+  	const newSessionId = uuidv4()
+		setSessionId(newSessionId)
+		console.log('[INIT] Default Action Nieuwe sessie aangemaakt:', newSessionId)
+  
   setMessages([
     {
       role: 'system',
@@ -98,6 +115,24 @@ useEffect(() => {
     },
   ]);
 };
+
+
+const loadMessages = async (sessionId: string) => {
+  const { data, error } = await supabase
+    .from('vw_agent_messages') // of 'vw_logs'
+    .select('role, content, started_at')
+    .eq('session_id', sessionId)
+    .order('started_at', { ascending: true })
+
+  if (error) {
+    console.error('[MESSAGES ERROR]', error)
+    return
+  }
+
+  setMessages(data)
+  setSessionId(sessionId) // belangrijk: deze behouden zodat nieuwe berichten goed worden gelogd
+}
+
 
   const handleSubmit = async () => {
     if (!input.trim() || !selected || disableActions || loading) return
@@ -110,6 +145,8 @@ useEffect(() => {
     setInput('')
     setLoading(true)
     
+    console.log("session:",sessionId)
+    
     console.log(selected.system_prompt)
 
     const res = await fetch('/api/agent', {
@@ -118,6 +155,7 @@ useEffect(() => {
         prompt: input,
         action_id: selected.id,
         user_id: user.id,
+        session_id: sessionId,
         parameters: selected.parameters,
         system_prompt: selected.system_prompt,
         inputs: {}
@@ -132,6 +170,29 @@ useEffect(() => {
   return (
     <Layout>
       <div className="pl-8 pr-4 flex flex-col h-[calc(100vh-4rem)]">
+      		
+      		<div className="absolute top-20 right-20">
+  					<button
+    					onClick={() => setShowHistory(true)}
+    					className="bg-white border border-black-500 text-black-600 px-4 py-2 rounded-lg flex items-center gap-2 z-999"
+  					>
+    					<span>History</span>
+  				  </button>
+					</div>
+					
+					<ChatHistorySidebar
+  						isOpen={showHistory}
+  						onClose={() => setShowHistory(false)}
+  						onSelect={(sessionId) => {
+  							loadMessages(sessionId)
+  							setShowHistory(false)
+  						} 
+  						}
+					/>
+					
+					
+			
+      		
           <div className="flex flex-col h-screen">
             <div className="flex-1 overflow-y-auto w-[80vw] mx-auto max-w-3xl space-y-2 pr-2">
               {messages.map((msg, index) => (
