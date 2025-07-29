@@ -20,7 +20,11 @@
 		"noanswer": "Geen antwoord.",
 		"you": "Jij",
 		"thinking": "aan het nadenken",
-		"typeprompt": "Typ hier je prompt..."
+		"typeprompt": "Typ hier je prompt...",
+		"notloggedon": "Niet ingelogd",
+		"cannotloadhistory": "Kan geschiedenis niet ophalen.",
+		"history": "Geschiedenis",
+		"nosessionsfound": "Geen sessies gevonden."
 	},
   "settings": {
 		"settings": "Instellingen",

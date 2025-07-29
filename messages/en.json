@@ -20,7 +20,11 @@
 		"noanswer": "No answer.",
 		"you": "You",
 		"thinking": "thinking",
-		"typeprompt": "Type your prompt here..."
+		"typeprompt": "Type your prompt here...",
+		"notloggedon": "Not logged in.",
+		"cannotloadhistory": "Cannot load history.",
+		"history": "History",
+		"nosessionsfound": "No sessions found."
 	},
 	"settings": {
 		"settings": "Settings",

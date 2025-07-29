@@ -40,6 +40,7 @@ export default function HomePage() {
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('homepage')
   const [sessionId, setSessionId] = useState<string>()
+  const [actionId, setActionId] = useState<string>()
   const [showHistory, setShowHistory] = useState(false)
  
   
@@ -117,6 +118,21 @@ useEffect(() => {
 };
 
 
+const loadAction = async (actionId: string) => {
+	const { data, error } = await supabase
+    .from('actions') 
+    .select('*')
+    .order('name')
+    .eq('id', actionId)
+    
+    console.log("action: ", actionId)
+    
+    console.log("data:", data)
+    
+    setSelected(data?.[0] || null)
+}
+
+
 const loadMessages = async (sessionId: string) => {
   const { data, error } = await supabase
     .from('vw_agent_messages') // of 'vw_logs'
@@ -131,6 +147,7 @@ const loadMessages = async (sessionId: string) => {
 
   setMessages(data)
   setSessionId(sessionId) // belangrijk: deze behouden zodat nieuwe berichten goed worden gelogd
+
 }
 
 
@@ -163,7 +180,7 @@ const loadMessages = async (sessionId: string) => {
     })
     const data = await res.json()
 
-    setMessages([...updatedMessages, { role: 'assistant', content: data?.output || "{t('noanswer')}" }])
+    setMessages([...updatedMessages, { role: 'assistant', content: data?.output || t('noanswer') }])
     setLoading(false)
   }
 
@@ -183,9 +200,10 @@ const loadMessages = async (sessionId: string) => {
 					<ChatHistorySidebar
   						isOpen={showHistory}
   						onClose={() => setShowHistory(false)}
-  						onSelect={(sessionId) => {
-  							loadMessages(sessionId)
-  							setShowHistory(false)
+  						onSelect={(sessionId, actionId) => {
+  							loadAction(actionId);
+  							loadMessages(sessionId);
+  							setShowHistory(false);
   						} 
   						}
 					/>
