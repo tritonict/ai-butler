@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useDisableActions } from '@/components/layout/Header'
 import { supabase } from '@/lib/supabaseClient'
 import Layout from '@/components/layout/Layout'
+import { Button } from '@/components/ui';
 
 type Action = {
   id: string
@@ -30,7 +31,7 @@ export default function ActionsPage() {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await supabase.from('actions').select('*').order('name')
+      const { data } = await supabase.from('actions').select('*').eq('action_type', 'defined_prompt').order('name')
       setActions(data || [])
     }
     fetch()
@@ -79,14 +80,13 @@ export default function ActionsPage() {
         {!selected ? (
           <div className="grid gap-2">
             {actions.map((a) => (
-              <button
+              <Button variant="blue"
                 key={a.id}
                 onClick={() => setSelected(a)}
                 disabled={disableActions}
-                className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
               >
                 {a.name}
-              </button>
+              </Button>
             ))}
           </div>
         ) : (

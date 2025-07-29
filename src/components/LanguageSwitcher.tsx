@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import { useTranslations } from 'next-intl'
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -12,6 +13,7 @@ const languages = [
 export default function LanguageSwitcher() {
   const [selectedLang, setSelectedLang] = useState('en');
   const router = useRouter();
+  const t = useTranslations('settings')
 
   useEffect(() => {
     const cookieLang = Cookies.get('locale') || 'en';
@@ -33,7 +35,8 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="mb-4">
-      <label htmlFor="language" className="mr-2">Taal</label>
+      <label htmlFor="language" className="mr-2">{t("language")}</label>
+      <br/>
       <select
         id="language"
         value={selectedLang}

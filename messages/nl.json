@@ -7,14 +7,54 @@
 		"actionsmanagement": "Actie Beheer",
 		"logout": "Uitloggen"
 	},
+	"header": {
+		"tokens": "tokens"
+	},
 	"general": {
   	"greeting": "Hallo",
   	"welcome": "Welkom op onze site",
-  	"logout": "Uitloggen",
   	"save": "Opslaan",
   	"cancel": "Annuleren"
   },
   "homepage": {
-		"welcome": "Welkom"
+		"noanswer": "Geen antwoord.",
+		"you": "Jij",
+		"thinking": "aan het nadenken",
+		"typeprompt": "Typ hier je prompt..."
+	},
+  "settings": {
+		"settings": "Instellingen",
+		"fullname": "Volledige naam",
+		"connectors": "Connectoren",
+		"busyloading": "Bezig met laden...",
+		"connect": "Koppel",
+		"disconnect": "Ontkoppel",
+		"language": "Taal"
+	},
+  "rolemanagement": {
+		"rolemanagement": "Beheer gebruikersrollen",
+		"name": "Naam",
+		"email": "Email",
+		"role": "Rol",
+		"user": "Gebruiker",
+		"admin": "Administrator"
+	},
+	"actionmanagement": {
+		"addaction": "Actie toevoegen",
+		"freeprompt": "Vrije prompt",
+		"definedprompt": "Gedefinieerde prompt",
+		"update": "Wijzig",
+		"create": "Aanmaken",
+		"action": "Aktie",
+		"loadingactions": "Acties aan het laden...",
+		"edit": "Wijzig",
+		"delete": "Verwijderen",
+		"cancel": "Annuleren",
+		"slug": "Machine naam (geen spaties)",
+		"name": "Naam",
+		"description": "Omschrijving",
+		"prompttemplate": "Prompt template",
+		"systemprompt": "Systeem prompt (instructies)",
+		"parameters": "Parameters (in JSON)"
 	}
 }

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import Layout from '@/components/layout/Layout'
+import { useTranslations } from 'next-intl'
+import { Button, Input } from '@/components/ui';
 
 type Action = {
   id: string
@@ -21,6 +23,7 @@ type Action = {
 export default function AdminActionsPage() {
   const [actions, setActions] = useState<Action[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations('actionmanagement')
   const [formData, setFormData] = useState<Action>({
     id: '',
     name: '',
@@ -75,10 +78,10 @@ export default function AdminActionsPage() {
     
     
     if (editMode) {
-      console.log('Editing action');
+     
       await supabase.from('actions').update({ ...payload, id: formData.id }).eq('id', formData.id);
     } else {
-      console.log('Creating new action');
+     
       await supabase.from('actions').insert([payload]);
     }
     
@@ -140,22 +143,27 @@ export default function AdminActionsPage() {
   return (
     <Layout>
     <div className="p-4">
-      <button
+      <Button variant="green"
         onClick={() => handleAdd()}
-        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4"
       >
-        Add Action
-      </button>
+        {t("addaction")}
+      </Button>
 
       {showForm && formData && (
         <form onSubmit={handleSubmit} className="space-y-4 bg-white p-4 rounded shadow mb-6">
-          <input className="w-full p-2 border rounded" placeholder="Slug" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} required />
-          <input className="w-full p-2 border rounded" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-          <input className="w-full p-2 border rounded" placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
+          <label className="block mb-1 font-medium">{t('slug')}</label>
+          <Input placeholder="Slug" value={formData.slug} onChange={(e) => setFormData({ ...formData, slug: e.target.value })} required />
+          <label className="block mb-1 font-medium">{t('name')}</label>
+          <Input placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+          <label className="block mb-1 font-medium">{t('description')}</label>
+          <Input placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} required />
+          <label className="block mb-1 font-medium">{t('prompttemplate')}</label>
           <textarea className="w-full p-2 border rounded" placeholder="Prompt Template" value={formData.prompt_template || ''} onChange={(e) => setFormData({ ...formData, prompt_template: e.target.value })} />
+          <label className="block mb-1 font-medium">{t('systemprompt')}</label>
           <textarea className="w-full p-2 border rounded" placeholder="System Prompt" value={formData.system_prompt || ''} onChange={(e) => setFormData({ ...formData, system_prompt: e.target.value })} />
-          <input 
-          		className="w-full p-2 border rounded" 
+          <label className="block mb-1 font-medium">{t('parameters')}</label>
+          <Input 
+          		 
           		placeholder="Parameters (JSON)" 
           		value={formData.parameters ? JSON.stringify(formData.parameters) : ''} 
           		
@@ -170,18 +178,18 @@ export default function AdminActionsPage() {
           		
           />
           <select className="w-full p-2 border rounded" value={formData.action_type} onChange={(e) => setFormData({ ...formData, action_type: e.target.value })}>
-            <option value="free_prompt">Free Prompt</option>
-            <option value="defined_prompt">Defined Prompt</option>
+            <option value="free_prompt">{t("freeprompt")}</option>
+            <option value="defined_prompt">{t("definedprompt")}</option>
           </select>
           <div className="flex gap-2">
-            <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">{editMode ? 'Update' : 'Create'} Action</button>
-            <button type="button" onClick={() => { setShowForm(false); setEditMode(false); }} className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">Cancel</button>
+            <Button variant="blue" type="submit" >{editMode ? t('update') : t('create')} {t("action")}</Button>
+            <Button variant="red" type="button" onClick={() => { setShowForm(false); setEditMode(false); }} >{t("cancel")}</Button>
           </div>
         </form>
       )}
 
       {loading ? (
-        <p>Loading actions...</p>
+        <p>{t("loadingactions")}</p>
       ) : (
         <div className="space-y-4">
           {actions.map((action) => (
@@ -189,8 +197,8 @@ export default function AdminActionsPage() {
               <h3 className="text-xl font-bold text-gray-800">{action.name} <span className="text-sm text-gray-600">({action.slug})</span></h3>
               <p className="text-gray-700 mb-2">{action.description}</p>
               <div className="flex gap-2">
-                <button onClick={() => handleEdit(action)} className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">Edit</button>
-                <button onClick={() => handleDelete(action.id)} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">Delete</button>
+                <Button variant="yellow" onClick={() => handleEdit(action)} >{t("edit")}</Button>
+                <Button variant="red" onClick={() => handleDelete(action.id)} >{t("delete")}</Button>
               </div>
             </div>
           ))}

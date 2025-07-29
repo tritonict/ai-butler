@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import { useAuth } from '@/components/AuthProvider'
 import { Menu } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 let globalRefresh: (() => void) | null = null
 export function triggerTokenRefresh() {
@@ -31,6 +32,7 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
   const [saldo, setSaldo] = useState<number | null>(null)
   const [tokenView, setTokenView] = useState<'daily' | 'total'>('daily')
   const [disableActions, setDisableActions] = useState(false)
+  const t = useTranslations('header')
 
   const fetchTokenStats = async () => {
     if (!user) return
@@ -93,7 +95,7 @@ export default function Header({ toggleSidebar }: { toggleSidebar?: () => void }
       </div>
       
       <div className="flex items-center gap-4 text-neutral-800 dark:text-white text-sm sm:text-base">
-      	<div><span onClick={toggleView} >{tokenText} tokens</span></div>
+      	<div><span onClick={toggleView} >{tokenText} {t('tokens')}</span></div>
       	<div><span>€ {formattedSaldo}</span></div>
     	</div>    
              

@@ -7,14 +7,54 @@
 		"actionsmanagement": "Actions Management",
 		"logout": "Logout"
 	},
+	"header": {
+		"tokens": "tokens"
+	},
 	"general": {
   	"greeting": "Hello",
   	"welcome": "Welcome to our site",
-  	"logout": "Logout",
   	"save": "Save",
   	"cancel": "Cancel"
   },
   "homepage": {
-		"welcome": "welcome"
+		"noanswer": "No answer.",
+		"you": "You",
+		"thinking": "thinking",
+		"typeprompt": "Type your prompt here..."
+	},
+	"settings": {
+		"settings": "Settings",
+		"fullname": "Full name",
+		"connectors": "Connectors",
+		"busyloading": "Busy loading...",
+		"connect": "Connect",
+		"disconnect": "Disconnect",
+		"language": "Language"
+	},
+  "rolemanagement": {
+		"rolemanagement": "Role management",
+		"name": "Name",
+		"email": "Email",
+		"role": "Role",
+		"user": "User",
+		"admin": "Administrator"
+	},
+	"actionmanagement": {
+		"addaction": "Add action",
+		"freeprompt": "Free prompt",
+		"definedprompt": "Defined prompt",
+		"update": "Update",
+		"create": "Create",
+		"action": "Action",
+		"loadingactions": "Loading actions...",
+		"edit": "Edit",
+		"delete": "Delete",
+		"cancel": "Cancel",
+		"slug": "Machine name (no spaces)",
+		"name": "Name",
+		"description": "Description",
+		"prompttemplate": "Prompt template",
+		"systemprompt": "System prompt (instructions)",
+		"parameters": "Parameters (in JSON)"
 	}
 }

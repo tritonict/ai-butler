@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import Layout from '@/components/layout/Layout'
 import { Button, Input } from '@/components/ui';
+import { H1 } from '@/components/ui/Headings';
 import { useAuth } from '@/components/AuthProvider'
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useTranslations } from 'next-intl'
 
 export default function SettingsPage() {
  
@@ -16,6 +18,8 @@ export default function SettingsPage() {
   const [calendarLinked, setCalendarLinked] = useState(false)
   const [message, setMessage] = useState('')
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations('settings')
+  const g = useTranslations('general')
 
   useEffect(() => {
     if (!user) return
@@ -99,9 +103,9 @@ export default function SettingsPage() {
   return (
     <Layout>
       <div className="p-4 max-w-xl mx-auto">
-        <h1 className="text-xl font-bold mb-4">Instellingen</h1>
+        <H1>{t('settings')}</H1>
         <div className="mb-4">
-          <label className="block mb-1 font-medium">Volledige naam</label>
+          <label className="block mb-1 font-medium">{t('fullname')}</label>
           <Input 
             type="text"
             value={fullName}
@@ -110,25 +114,25 @@ export default function SettingsPage() {
         </div>
         <LanguageSwitcher />
         <Button variant="blue" onClick={handleSave} >
-          Opslaan
+          {g('save')}
         </Button>
 
         <div className="mt-8">
-          <h2 className="font-semibold mb-2">Google Calendar</h2>
+          <H1>{t("connectors")}</H1>
           {loading ? (
-            <span>Bezig met laden...</span>
+            <span>{t('busyloading')}</span>
           ) : calendarLinked ? (
             <Button variant="red"
               onClick={handleUnlink}
             >
-              Ontkoppel Google Calendar
+              {t('disconnect')} Google Calendar
             </Button>
           ) : (
             <Button variant="green"
   
               onClick={handleGoogleCalendarConnect}
             >
-              Koppel Google Calendar
+              {t('connect')} Google Calendar
             </Button>
           )}
         </div>

@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient'
 import Layout from '@/components/layout/Layout'
 import { Button, Input } from '@/components/ui';
 import { Upload, Globe, Settings2, Send, Bot } from 'lucide-react';
+import { useTranslations } from 'next-intl'
 
 type Action = {
   id: string
@@ -35,6 +36,7 @@ export default function HomePage() {
   const chatEndRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [mounted, setMounted] = useState(false);
+  const t = useTranslations('homepage')
   
   
   // dropdown voor buddies  
@@ -123,7 +125,7 @@ useEffect(() => {
     })
     const data = await res.json()
 
-    setMessages([...updatedMessages, { role: 'assistant', content: data?.output || 'Geen antwoord' }])
+    setMessages([...updatedMessages, { role: 'assistant', content: data?.output || "{t('noanswer')}" }])
     setLoading(false)
   }
 
@@ -147,7 +149,7 @@ useEffect(() => {
                     }`}
                   >
                     <span className="block text-sm font-semibold">
-                      {msg.role === 'user' ? 'Jij' : selected?.name || 'AI'}:
+                      {msg.role === 'user' ? t('you') : selected?.name || 'AI'}:
                     </span>
                     {msg.content}
                   </div>
@@ -157,7 +159,7 @@ useEffect(() => {
                 <div className="flex justify-start">
                   <div className="bg-white text-black text-left p-3 rounded-lg max-w-[80%]">
                     <span className="block text-sm font-semibold">{selected?.name || 'AI'}:</span>
-                    typing...
+                    {t('thinking')}...
                   </div>
                 </div>
               )}
@@ -181,7 +183,7 @@ useEffect(() => {
       					{/* Input veld */}
   							<input
     							type="text"
-    							placeholder="Typ hier je prompt..."
+    							placeholder={t('typeprompt')}
     							value={input}
         					onChange={(e) => setInput(e.target.value)}
     							className="w-full bg-transparent text-zinc-900 dark:text-zinc-100 placeholder-zinc-600 dark:placeholder-zinc-400 px-1 py-2 border-none focus:outline-none focus:ring-0"
