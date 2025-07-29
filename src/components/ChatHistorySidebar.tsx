@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/Button'
 import { X } from 'lucide-react'
 
 type Session = {
-  id: string
-  title: string
+  session_id: string
+  prompt: string
+  started_at: string
 }
 
 type ChatHistorySidebarProps = {
