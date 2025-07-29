@@ -15,7 +15,7 @@ type Session = {
 type ChatHistorySidebarProps = {
   isOpen: boolean
   onClose: () => void
-  onSelect: (sessionId: string) => void
+  onSelect: (sessionId: string, actionId: string) => void
 }
 
 export default function ChatHistorySidebar({
