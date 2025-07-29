@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { X } from 'lucide-react'
 
 type Session = {
