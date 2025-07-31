@@ -91,7 +91,7 @@ useEffect(() => {
   }
   
   
-  const handleDelete = async (doc: any) => {
+  const handleDelete = async (doc: DocumentRecord) => {
     const path = doc.metadata?.file_path;
     if (!path) return;
 
