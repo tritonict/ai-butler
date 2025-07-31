@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabaseClient';
 import Layout from '@/components/layout/Layout'
 import { useTranslations } from 'next-intl'
 import { Button, Input } from '@/components/ui';
+import ActionContextUploader from '@/components/ActionContextUploader'
 
 type Action = {
   id: string
@@ -69,8 +70,6 @@ export default function AdminActionsPage() {
       is_active: formData.is_active,
       action_type: formData.action_type,
       system_prompt: formData.system_prompt,
-      
-      
       
       
     };
@@ -181,6 +180,13 @@ export default function AdminActionsPage() {
             <option value="free_prompt">{t("freeprompt")}</option>
             <option value="defined_prompt">{t("definedprompt")}</option>
           </select>
+          
+          {editMode && (
+          		<ActionContextUploader actionId={formData.id} />
+          	)
+          }
+          
+          
           <div className="flex gap-2">
             <Button variant="blue" type="submit" >{editMode ? t('update') : t('create')} {t("action")}</Button>
             <Button variant="red" type="button" onClick={() => { setShowForm(false); setEditMode(false); }} >{t("cancel")}</Button>
