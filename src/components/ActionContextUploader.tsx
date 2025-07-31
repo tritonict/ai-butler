@@ -40,20 +40,24 @@ useEffect(() => {
         .contains("metadata", { action_id: actionId });
         
         
-    
-
       if (error) {
       	console.error("Error fetching documents:", error);
       }
       else {     	
-			// Unieke documenten op basis van metadata.file_path
-			const uniqueDocs = Array.from(
-  		new Map(data.map(doc => [data.metadata?.file_path, doc])).values()
-			);
+					// Unieke documenten op basis van metadata.file_path
+					const typedData = data as DocumentRecord[];
+					const uniqueDocs = Array.from(
+  				new Map(typedData.map(doc => [typedData.metadata?.file_path, doc])).values()
+					);
 
-			setDocuments(uniqueDocs);
+					setDocuments(uniqueDocs);
         
-      //	setDocuments(data);
+      		//	setDocuments(data);
+      		
+      
+      		
+      		
+      		
       }
     };
 
