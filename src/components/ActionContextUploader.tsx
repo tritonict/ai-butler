@@ -2,13 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient'
-import { v4 as uuidv4 } from "uuid";
+
+
+type SupabaseUser = {
+  id: string;
+};
+
+type DocumentRecord = {
+  id: string;
+  metadata: {
+    action_id: string;
+    user_id: string;
+    file_path: string;
+  };
+};
+
 
 
 export default function ActionContextUploader({ actionId }: { actionId: string }) {
   const [uploading, setUploading] = useState(false)
-  const [user, setUser] = useState<any>(null)
-  const [documents, setDocuments] = useState<any[]>([]);
+  const [user, setUser] = useState<SupabaseUser | null>(null)
+  const [documents, setDocuments] = useState<DocumentRecord[]>([]);
 
 useEffect(() => {
   const getUser = async () => {
