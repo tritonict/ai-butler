@@ -47,7 +47,7 @@ useEffect(() => {
 					// Unieke documenten op basis van metadata.file_path
 					const typedData = data as DocumentRecord[];
 					const uniqueDocs = Array.from(
-  				new Map(typedData.map(doc => [typedData.metadata?.file_path, doc])).values()
+  				new Map(typedData.map(doc => [doc.metadata?.file_path, doc])).values()
 					);
 
 					setDocuments(uniqueDocs);
