@@ -20,7 +20,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [role, setRole] = useState<string | null>(null)
 
-
   // Init session
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -35,20 +34,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe()
   }, [])
-
-
-// Cleanup access token hash after OAuth login
- 
-  
-  
-  useEffect(() => {
-  supabase.auth.getSession().then(() => {
-    if (window.location.hash.includes('access_token')) {
-      window.history.replaceState(null, '', window.location.pathname);
-    }
-  });
-}, []);
-
 
   // Fetch role after session change
   useEffect(() => {
@@ -76,7 +61,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-//export const useAuth = () => useContext(AuthContext)
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext)
