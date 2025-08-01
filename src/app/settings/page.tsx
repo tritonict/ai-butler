@@ -55,7 +55,7 @@ export default function SettingsPage() {
 
   const handleGoogleCalendarConnect = () => {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const redirectUri = `${window.location.origin}/api/oauth/google-calendar/callback`;
+  const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_REDIRECT_URI;
   const scope = 'https://www.googleapis.com/auth/calendar';
   const state = user?.id; // <-- gebruik je huidige user ID
 
@@ -70,6 +70,7 @@ export default function SettingsPage() {
 
   window.location.href = url;
 };
+
 
   const handleUnlink = async () => {
   	if (!user) return; // of toon een foutmelding
