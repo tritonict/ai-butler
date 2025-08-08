@@ -89,7 +89,7 @@ export default function AdminDashboardPage() {
     const run = async () => {
       // 1) Users (let op: dit werkt alleen als je een view of policy hebt)
       const usersRes = await supabase
-        .from('users')
+        .from('vw_users')
         .select('*', { count: 'exact', head: true });
       setUserCount(usersRes.count ?? 0);
 
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
 
       // 3/4) Usage & costs per dag + totalen
       const usage = await supabase
-        .from<AgentLog>('agent_logs')
+        .from('agent_logs')
         .select('started_at, token_usage, cost_eur')
         .gte('started_at', fromDateISO);
 
