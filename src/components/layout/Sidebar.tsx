@@ -78,6 +78,11 @@ const handleTouchEnd = (e: React.TouchEvent) => {
             <Activity size={18} /> {t('actionsmanagement')}
           </a>
         </IfRole>
+        <IfRole role="admin">
+          <a href="/admin/dashboard" className="flex items-center gap-2 text-neutral-800 dark:text-white">
+            <Activity size={18} /> {t('admindashboard')}
+          </a>
+        </IfRole>
         <button
           onClick={handleLogout}
           className="flex items-center gap-2 text-red-600"

@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useDisableActions } from '@/components/layout/Header'
 import { supabase } from '@/lib/supabaseClient'
 import Layout from '@/components/layout/Layout'
-import { Button } from '@/components/ui';
+import { Button, Input, Card, CardContent } from '@/components/ui';
+import { useRouter } from "next/navigation";
 
 type Action = {
   id: string
@@ -23,135 +24,90 @@ export default function ActionsPage() {
   const [actions, setActions] = useState<Action[]>([])
   const [selected, setSelected] = useState<Action | null>(null)
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
-  const [loading, setLoading] = useState(false)
-  const disableActions = useDisableActions()
-  const chatEndRef = useRef<HTMLDivElement | null>(null)
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [parameterValues, setParameterValues] = useState<Record<string, string>>({});
+  const router = useRouter();
+  
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await supabase.from('actions').select('*').eq('action_type', 'defined_prompt').order('name')
-      setActions(data || [])
+      const { data, error } = await supabase
+      .from('actions')
+      .select('*')
+      .eq('action_type', 'defined_prompt')
+      .order('name');
+      
+      if (error) console.error(error);
+      else setActions(data);
     }
     fetch()
   }, [])
+  
+  
+  const handleParamChange = (name: string, value: string) => {
+    setParameterValues((prev) => ({ ...prev, [name]: value }));
+  };
+  
+  const renderPrompt = (template: string, values: Record<string, string>) => {
+    return template.replace(/{{(.*?)}}/g, (_, key) => values[key.trim()] || "");
+  };
+  
+  
+const executeAction = (action: Action, values: Record<string, string>) => {
+    const finalPrompt = renderPrompt(action.prompt_template, values);
+    const system = action.system_prompt || "";
+    router.push(`/home?prompt=${encodeURIComponent(finalPrompt)}&system=${encodeURIComponent(system)}`);
+  };
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, loading])
+const renderParameters = () => {
+    if (!selected) return null;
+    const parameters = selected.parameters ? JSON.parse(selected.parameters) : [];
 
-  useEffect(() => {
-    if (selected && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100)
-    }
-  }, [selected])
+}
 
-  const handleSubmit = async () => {
-    if (!input.trim() || !selected || disableActions || loading) return
 
-    const user = (await supabase.auth.getUser()).data.user
-    if (!user) return
 
-    const updatedMessages = [...messages, { role: 'user', content: input.trim() }]
-    setMessages(updatedMessages)
-    setInput('')
-    setLoading(true)
-
-    const res = await fetch('/api/agent', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: input,
-        action_id: selected.id,
-        user_id: user.id,
-        parameters: selected.parameters,
-        inputs: {}
-      }),
-    })
-    const data = await res.json()
-
-    setMessages([...updatedMessages, { role: 'assistant', content: data?.output || 'Geen antwoord' }])
-    setLoading(false)
-  }
-
+ 
   return (
-    <Layout>
-      <div className="pl-8 pr-4 flex flex-col h-[calc(100vh-4rem)]">
-        {!selected ? (
-          <div className="grid gap-2">
-            {actions.map((a) => (
-              <Button variant="blue"
-                key={a.id}
-                onClick={() => setSelected(a)}
-                disabled={disableActions}
-              >
-                {a.name}
-              </Button>
+  <Layout>
+  <div className="p-6">
+    <h1 className="text-3xl font-bold mb-4">Acties</h1>
+
+    {!selected ? (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {actions.map((action) => (
+          <Button variant="blue"
+          		key={action.id} onClick={() => setSelected(action)} >
+            
+              {action.name}
+            
+          </Button>
+        ))}
+      
+        
+      </div>
+    ) : (
+      <div className="space-y-4">
+        {selected.parameters && selected.parameters.length > 0 && (
+          <div className="space-y-2">
+            {selected.parameters.map((param: any) => (
+              <Input
+                key={param.name}
+                placeholder={param.label}
+                onChange={(e) => handleParamChange(param.name, e.target.value)}
+              />
             ))}
           </div>
-        ) : (
-          <div className="flex flex-col h-full">
-            <h2 className="text-xl font-bold mb-4">{selected.name}</h2>
-
-            <div className="flex-1 overflow-y-auto space-y-2 pr-2">
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    msg.role === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
-                >
-                  <div
-                    className={`whitespace-pre-wrap max-w-[80%] p-3 rounded-lg ${
-                      msg.role === 'user'
-                        ? 'bg-blue-700 text-white text-right'
-                        : 'bg-neutral-700 text-green-300 text-left'
-                    }`}
-                  >
-                    <span className="block text-sm font-semibold">
-                      {msg.role === 'user' ? 'Jij' : 'AI'}:
-                    </span>
-                    {msg.content}
-                  </div>
-                </div>
-              ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="bg-neutral-700 text-green-300 text-left p-3 rounded-lg max-w-[80%]">
-                    <span className="block text-sm font-semibold">AI:</span>
-                    typing...
-                  </div>
-                </div>
-              )}
-              <div ref={chatEndRef} />
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleSubmit()
-              }}
-              className="mt-4 mb-2 flex gap-2"
-            >
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="flex-1 p-2 bg-neutral-800 text-white rounded"
-                placeholder="Typ je vraag..."
-                disabled={disableActions || loading}
-              />
-              <button
-                type="submit"
-                className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
-                disabled={disableActions || loading || !input.trim()}
-              >
-                Verstuur
-              </button>
-            </form>
-          </div>
         )}
+
+        <Button variant="blue"
+          onClick={() => executeAction(selected, parameterValues)}
+          
+        >
+          Uitvoeren
+        </Button>
       </div>
-    </Layout>
-  )
+    )}
+  </div>
+  </Layout>
+);
 }

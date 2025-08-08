@@ -38,7 +38,6 @@ export default function HomePage() {
   const disableActions = useDisableActions()
   const chatEndRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const llmButtonRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
   const t = useTranslations('homepage')
   const [sessionId, setSessionId] = useState<string>()
@@ -59,8 +58,16 @@ export default function HomePage() {
   
   useEffect(() => {
 
-	if (!selected || hasInjectedPrompt.current || !prompt) return;
+	console.log("voor check Injected", prompt)
+  if (!selected || hasInjectedPrompt.current || !prompt) return;
+  console.log("na check Injected", prompt)
   hasInjectedPrompt.current = true;
+
+  setSelected((prev) => ({
+    ...prev,
+    prompt_template: prompt,
+    system_prompt: systemPrompt,
+  }));
   
   handleSubmit(true);
   
@@ -168,13 +175,24 @@ const loadMessages = async (sessionId: string) => {
 }
 
 
+
+
+
   const handleSubmit = async (force = false) => {
+    console.log("bij binnenkomst submit", prompt)
+    
+    console.log(selected)
     
     const promptToSend = force
     ? prompt // gebruik de meegegeven prompt uit selected
     : input.trim();
     
+    console.log(promptToSend)
+    
   	if (!promptToSend || !selected || disableActions || loading) return;
+    
+    console.log("na prompt check in submit")
+  
 
     const user = (await supabase.auth.getUser()).data.user
     if (!user) return
@@ -182,11 +200,12 @@ const loadMessages = async (sessionId: string) => {
     const updatedMessages = [...messages, { role: 'user', content: promptToSend }]
     setMessages(updatedMessages)
     setInput('')
-    setLLMOpen(false);
-    llmButtonRef.current?.blur();
-    console.log(document.activeElement)
     setLoading(true)
-      
+    
+    console.log("session:",sessionId)
+    
+    console.log(selected.system_prompt)
+    
     const systempromptToSend = force
     ? systemPrompt // gebruik de meegegeven prompt uit selected
     : selected.system_prompt;
@@ -209,7 +228,11 @@ const loadMessages = async (sessionId: string) => {
     setLoading(false)
   }
   
+  
  
+
+
+  
 
   return (
     <Layout>
@@ -338,22 +361,24 @@ const loadMessages = async (sessionId: string) => {
             				
             				<button
               				title="Instellingen"
-              				type="button"
-              				ref={llmButtonRef}
-              				onFocus={() => console.log("LLM button kreeg focus")}
-              				onClick={(e) => {
-              				
-              				setLLMOpen(prev => !prev)
-              				}}
-              				
-              				
-         
-              				
+              				onClick={() => setLLMOpen(prev => !prev)}
               				className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none"
             				>
               			<MessageCircleMore className="w-5 h-5" />
             				</button>
-            				{llmopen && (
+        					</div>
+									<button className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none">
+            				<Upload className="w-5 h-5" />
+          				</button>
+      						<button
+            				title="Verstuur"
+            					className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none"
+          				>
+            			<Send className="w-5 h-5" />
+          				</button>
+          				
+          				
+          				{llmopen && (
         <div className="absolute bottom-full mb-2 w-48 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded shadow-lg z-10">
           <ul className="max-h-60 overflow-y-auto text-sm">
               <li onClick={() => { setLLMOpen(false) }} className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800" >
@@ -377,22 +402,6 @@ const loadMessages = async (sessionId: string) => {
           </ul>
         </div>
       )}
-        					</div>
-									<button className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none">
-            				<Upload className="w-5 h-5" />
-          				</button>
-          				
-          				
-          				
-      						<button
-            				title="Verstuur"
-            					className="p-2 rounded-md border border-zinc-400 dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-700 transition border-none"
-          				>
-            			<Send className="w-5 h-5" />
-          				</button>
-          				
-          				
-          				
           				
           				
           				
