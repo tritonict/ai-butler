@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient'
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Layout from '@/components/layout/Layout'
 
