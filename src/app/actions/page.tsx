@@ -97,7 +97,7 @@ export default function ActionsPage() {
             .map((a) => (
               <Button
                 key={a.id}
-                variant="outline"
+                variant="blue"
                 className="w-full justify-start"
                 onClick={() => setSelected(a)}
               >
