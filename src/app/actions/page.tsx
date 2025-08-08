@@ -56,7 +56,7 @@ export default function ActionsPage() {
   useEffect(() => {
     const fetchActions = async () => {
       const { data, error } = await supabase
-        .from<ActionRow>("actions")
+        .from("actions")
         .select("id, name, description, prompt_template, system_prompt, parameters")
         .eq("action_type", "defined_prompt");
 
@@ -64,7 +64,7 @@ export default function ActionsPage() {
         console.error("Failed to load actions", error);
         return;
       }
-      setActions(data ?? []);
+      setActions((data ?? []) as ActionRow[]);
     };
     fetchActions();
   }, [supabase]);
