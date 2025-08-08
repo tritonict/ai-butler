@@ -145,34 +145,38 @@ export default function AdminDashboardPage() {
           Export CSV
         </button>
       </div>
-
-      <Card className="md:col-span-1">
+			<div className="md:col-span-1">
+      <Card>
         <CardContent>
           <h2 className="text-xl font-semibold">Totaal gebruikers</h2>
           <p className="text-3xl">{userCount}</p>
         </CardContent>
       </Card>
-
-      <Card className="md:col-span-1">
+      </div>
+			<div className="md:col-span-1">
+      <Card>
         <CardContent>
           <h2 className="text-xl font-semibold">Totaal prompts</h2>
           <p className="text-3xl">{logCount}</p>
         </CardContent>
       </Card>
-
-      <Card className="md:col-span-1">
+      </div>
+			<div className="md:col-span-1">
+      <Card>
         <CardContent>
           <h2 className="text-xl font-semibold">Totaal tokens ({rangeDays}d)</h2>
           <p className="text-3xl">{totalTokens.toLocaleString()}</p>
         </CardContent>
       </Card>
-
-      <Card className="md:col-span-1">
+      </div>
+			<div className="md:col-span-1">
+      <Card>
         <CardContent>
           <h2 className="text-xl font-semibold">Totale kosten ({rangeDays}d)</h2>
           <p className="text-3xl">€ {totalCost.toFixed(2)}</p>
         </CardContent>
       </Card>
+      </div>
 
       {/* Grafieken: elk 2 kolommen breed op md+ */}
     <div className="col-span-1 md:col-span-2">
