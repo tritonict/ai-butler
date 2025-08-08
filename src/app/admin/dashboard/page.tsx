@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from '@/lib/supabaseClient'
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/Card";
 import Layout from '@/components/layout/Layout'
 import {
   LineChart,
